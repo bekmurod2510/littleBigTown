@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222222);
@@ -19,6 +20,11 @@ scene.add(sunLight);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
 
 const loader = new GLTFLoader();
 
@@ -47,6 +53,7 @@ points.push(new THREE.Vector3(-10, 0, 0))
 */
 
 function animate(time) {
+  controls.update();
   renderer.render(scene, camera);
 }
 
